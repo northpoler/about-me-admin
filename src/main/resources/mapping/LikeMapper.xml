@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pro.jianbing.aboutme.mapper.LikeMapper">
+
+    <resultMap id="BaseResultMap" type="pro.jianbing.aboutme.entity.Like">
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="like_time" jdbcType="TIMESTAMP" property="likeTime" />
+        <result column="person" jdbcType="VARCHAR" property="person" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+    </resultMap>
+
+    <select id="getSumLikes" resultType="java.lang.Integer">
+        select count(1) from likes
+    </select>
+
+    <select id="insertLike">
+        insert into likes (
+        id,
+        like_time,
+        person,
+        ip
+        )
+        values (
+        #{id},
+        #{likeTime},
+        #{person},
+        #{ip}
+        )
+    </select>
+
+</mapper>
