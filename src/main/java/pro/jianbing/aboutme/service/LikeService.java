@@ -9,6 +9,7 @@ import pro.jianbing.aboutme.util.NetworkUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class LikeService{
         Like like = new Like();
         like.setId(UUID.randomUUID().toString().replaceAll("-",""));
         like.setIp(NetworkUtil.getIpAddress(request));
-        like.setLikeTime(new Timestamp(System.currentTimeMillis()));
+        like.setLikeTime(LocalDateTime.now());
         likeMapper.insertLike(like);
     }
 }

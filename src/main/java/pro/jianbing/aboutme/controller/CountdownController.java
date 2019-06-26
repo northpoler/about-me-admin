@@ -28,7 +28,7 @@ public class CountdownController {
     @GetMapping("table")
     public Map<String,Object> getTwoCountdown(){
         List<Countdown> twoCountdown = countdownService.getTwoCountdown();
-        Map<String,Object> data = new HashMap<>(3);
+        Map<String,Object> data = new HashMap<>(4);
         data.put("code",0);
         data.put("msg","success");
         data.put("data",twoCountdown);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pro.jianbing.aboutme.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="pro.jianbing.aboutme.entity.User">
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="last_ip" jdbcType="VARCHAR" property="lastIP" />
+        <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+        <result column="mark" jdbcType="VARCHAR" property="mark" />
+    </resultMap>
+    
+    <select id="getUserByUsername" resultType="pro.jianbing.aboutme.entity.User">
+        select
+          id,
+          username,
+          password,
+          phone,
+          created,
+          last_ip lastIP,
+          last_time lastTime,
+          mark
+        from user
+        where username = #{username}
+    </select>
+
+</mapper>
