@@ -13,11 +13,49 @@
     <link rel="stylesheet" th:href="@{../static/layui/css/layui.css}"/>
     <script type="text/javascript" src="http://hovertree.com/ziyuan/jquery/jquery-1.11.3.min.js"></script>
 </head>
-<body class="layui-layout-body">
-<form action="/login" method="post">
-    用户名 : <input type="text" name="username"/>
-    密码 : <input type="password" name="password"/>
-    <input type="submit" value="登录">
-</form>
+<body class="layui-layout-body" style="background-color: palegoldenrod">
+<div class="layui-row">
+    <div class="layui-col-md4">&nbsp;</div>
+    <div class="layui-col-md4">
+        <h1 style="text-align: center;margin-top: 100px;margin-bottom: 30px">
+            欢迎登陆
+        </h1>
+        <form class="layui-form" action="/login" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密  码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="layui-col-md4">&nbsp;</div>
+</div>
+
+<script th:src="@{../static/layui/layui.js}"></script>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            layer.msg("登陆中······");
+            return true;
+        });
+    });
+</script>
 </body>
 </html>
