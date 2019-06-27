@@ -23,9 +23,4 @@ public class IndexController {
         model.addAttribute("likes",sumLikes);
         return "index";
     }
-
-    @GetMapping("/info")
-    public String info(Model model){
-        return "info";
-    }
 }
