@@ -8,4 +8,6 @@ import pro.jianbing.aboutme.entity.User;
 public interface UserMapper {
 
     User getUserByUsername(String username);
+
+    void updateUserInfo(User user);
 }

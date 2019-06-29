@@ -17,17 +17,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.User;
 import pro.jianbing.aboutme.mapper.UserMapper;
+import pro.jianbing.aboutme.repository.UserRepositoty;
 import pro.jianbing.aboutme.security.SecurityUser;
+import pro.jianbing.aboutme.util.NetworkUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+
+/**
+ * @author DefaultAccount
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserRepositoty userRepositoty;
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
     @Override
     protected void configure(HttpSecurity http) throws Exception { //配置策略
@@ -53,17 +63,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() { //登出处理
-        return new LogoutSuccessHandler() {
-            @Override
-            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                try {
-                    SecurityUser user = (SecurityUser) authentication.getPrincipal();
-                    logger.info("USER : " + user.getUsername() + " LOGOUT SUCCESS !  ");
-                } catch (Exception e) {
-                    logger.info("LOGOUT EXCEPTION , e : " + e.getMessage());
-                }
-                httpServletResponse.sendRedirect("/login");
+        return (httpServletRequest, httpServletResponse, authentication) -> {
+            try {
+                SecurityUser user = (SecurityUser) authentication.getPrincipal();
+                logger.info("USER : " + user.getUsername() + " LOGOUT SUCCESS !  ");
+            } catch (Exception e) {
+                logger.info("LOGOUT EXCEPTION , e : " + e.getMessage());
             }
+            httpServletResponse.sendRedirect("/login");
         };
     }
 
@@ -75,24 +82,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 User userDetails = (User) authentication.getPrincipal();
                 logger.info("USER : " + userDetails.getUsername() + " LOGIN SUCCESS !  ");
                 super.onAuthenticationSuccess(request, response, authentication);
+                LocalDateTime now = LocalDateTime.now();
+                String ipAddress = NetworkUtil.getIpAddress(request);
+                userDetails.setLastIP(ipAddress);
+                userDetails.setLastTime(now);
+                userRepositoty.updateLoginInfo(ipAddress,now,userDetails.getId());
             }
         };
     }
     @Override
     @Bean
     public UserDetailsService userDetailsService() {    //用户登录实现
-        return new UserDetailsService() {
-            @Autowired
-            private UserMapper userMapper;
-
-            @Override
-            public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-                User user = userMapper.getUserByUsername(s);
-                if (user == null) {
-                    throw new UsernameNotFoundException("Username " + s + " not found");
-                }
-                return new SecurityUser(user);
+        return s -> {
+            User user = userRepositoty.findByUsername(s);
+            if (user == null) {
+                throw new UsernameNotFoundException("Username " + s + " not found");
             }
+            return new SecurityUser(user);
         };
     }
 }

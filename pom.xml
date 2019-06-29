@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <jmh.version>1.14.1</jmh.version>
+        <hibernate.version>5.2.5.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -63,12 +64,6 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -113,7 +108,20 @@
             <scope>compile</scope>
         </dependency>
         <!--jmh结束-->
-
+	
+	    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+	    <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpcore</artifactId>
+		    <version>4.4.10</version>
+	    </dependency>
+	
+	    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+	    <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.6</version>
+	    </dependency>
     </dependencies>
 
     <build>
