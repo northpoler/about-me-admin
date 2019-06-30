@@ -13,6 +13,9 @@ import pro.jianbing.aboutme.util.NetworkUtil;
 
 import java.security.Principal;
 
+/**
+ * @author 李建兵
+ */
 @Controller
 public class IndexController {
 
@@ -29,9 +32,8 @@ public class IndexController {
     public String index(Principal principal, Model model){
         Authentication authentication = (Authentication) principal;
         User user = (User) authentication.getPrincipal();
-        User userById = userService.getUserById(user.getId());
-        String addressByIp = NetworkUtil.getAddressByIp(userById.getLastIP());
-        model.addAttribute("user",userById);
+        String addressByIp = NetworkUtil.getAddressByIp(user.getLastIP());
+        model.addAttribute("user",user);
         model.addAttribute("address",addressByIp);
         return "index";
     }

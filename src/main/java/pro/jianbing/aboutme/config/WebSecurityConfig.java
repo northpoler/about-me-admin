@@ -84,8 +84,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 super.onAuthenticationSuccess(request, response, authentication);
                 LocalDateTime now = LocalDateTime.now();
                 String ipAddress = NetworkUtil.getIpAddress(request);
-                userDetails.setLastIP(ipAddress);
-                userDetails.setLastTime(now);
                 userRepositoty.updateLoginInfo(ipAddress,now,userDetails.getId());
             }
         };
