@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pro.jianbing</groupId>
-    <artifactId>about-me</artifactId>
+    <artifactId>about-me-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>about-me</name>
-    <description>关于李建兵个人信息的项目</description>
+    <name>about-me-admin</name>
+    <description>关于李建兵个人信息的项目的后台管理系统</description>
 
     <properties>
         <java.version>1.8</java.version>
