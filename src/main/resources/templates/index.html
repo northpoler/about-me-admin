@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>建兵本纪 | 后台主页</title>
     <div th:include="top :: top"></div>
@@ -20,10 +20,10 @@
                                 <div class="layui-card">
                                     <div class="layui-card-header">总点赞数</div>
                                     <div class="layui-card-body">
-                                        <p style="font-size: 4em;margin: 0.5em 0px;text-align: center" id="sumLikes">0</p>
+                                        <p style="font-size: 4em;margin: 0.5em 0em;text-align: center" id="sumLikes">0</p>
                                         <p>
                                             今日点赞数
-                                            <span th:text="${sumLikesToday}">88万</span>
+                                            <span th:text="${sumLikesToday}" id="sumLikesToday">0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -35,54 +35,8 @@
                                         <p style="font-size: 4em;margin: 0.5em 0px;text-align: center" id="sumSearch">0</p>
                                         <p>
                                             今日搜索数
-                                            <span th:text="${sumSearchToday}">88万</span>
+                                            <span th:text="${sumSearchToday}" id="sumSearchToday">0</span>
                                         </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-md12">
-                                <div class="layui-card">
-                                    <div class="layui-card-header">数据概览</div>
-                                    <div class="layui-card-body">
-
-                                        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
-                                             lay-filter="LAY-index-dataview" lay-anim="fade" lay-indicator="inside"
-                                             lay-arrow="none" style="width: 100%; height: 280px;">
-                                            <div carousel-item="" id="LAY-index-dataview">
-                                                <div class="layui-this" _echarts_instance_="1561856262689"
-                                                     style="-webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;">
-                                                    <div style="position: relative; overflow: hidden; width: 1067px; height: 332px;">
-                                                        <div data-zr-dom-id="bg" class="zr-element"
-                                                             style="position: absolute; left: 0px; top: 0px; width: 1067px; height: 332px; user-select: none;"></div>
-                                                        <canvas width="1067" height="332" data-zr-dom-id="0"
-                                                                class="zr-element"
-                                                                style="position: absolute; left: 0px; top: 0px; width: 1067px; height: 332px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
-                                                        <canvas width="1067" height="332" data-zr-dom-id="1"
-                                                                class="zr-element"
-                                                                style="position: absolute; left: 0px; top: 0px; width: 1067px; height: 332px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
-                                                        <canvas width="1067" height="332"
-                                                                data-zr-dom-id="_zrender_hover_" class="zr-element"
-                                                                style="position: absolute; left: 0px; top: 0px; width: 1067px; height: 332px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
-                                                        <div class="echarts-tooltip zr-element"
-                                                             style="position: absolute; display: none; border-style: solid; white-space: nowrap; transition: left 0.4s ease 0s, top 0.4s ease 0s; background-color: rgba(50, 50, 50, 0.5); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font-family: 微软雅黑, Arial, Verdana, sans-serif; padding: 5px; left: 475px; top: 76px;">
-                                                            14:00<br>PV : 26,666<br>UV : 2,666
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div></div>
-                                                <div></div>
-                                            </div>
-                                            <div class="layui-carousel-ind">
-                                                <ul>
-                                                    <li class="layui-this"></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
-                                            <button class="layui-icon layui-carousel-arrow" lay-type="sub"></button>
-                                            <button class="layui-icon layui-carousel-arrow" lay-type="add"></button>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -182,17 +136,21 @@
 
     var sumLikes = [[${sumLikes}]];
     var sumSearch = [[${sumSearch}]];
+    var sumLikesToday = [[${sumLikesToday}]];
+    var sumSearchToday = [[${sumSearchToday}]];
 
 
     NumAutoPlusAnimation("sumLikes", {
         time: 6000,
         num: sumLikes,
-        regulator: 32
+        regulator: 32,
+        start: 0
     });
     NumAutoPlusAnimation("sumSearch", {
         time: 3000,
         num: sumSearch,
-        regulator: 32
+        regulator: 32,
+        start: 0
     });
 
 
@@ -209,7 +167,7 @@
             regulator = options.regulator || 100, //调速器，改变regulator的数值可以调节数字改变的速度
 
             step = finalNum / (time / regulator),/*每30ms增加的数值--*/
-            count = 0, //计数器
+            count = options.start, //计数器
             initial = 0;
 
         var timer = setInterval(function() {
@@ -231,6 +189,36 @@
         }, 30);
     }
 
+    getNewestData("/like/count/all",sumLikes,"sumLikes");
+    getNewestData("/like/count/today",sumLikesToday,"sumLikesToday");
+    getNewestData("/keyword/count/all",sumSearch,"sumSearch");
+    getNewestData("/keyword/count/today",sumSearchToday,"sumSearchToday");
+
+
+
+    // 定时获取最新的点赞数和搜索数
+    function getNewestData(url,source,target){
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: url,
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data) {
+                    if (data.code==0&&data.data!=source){
+                        NumAutoPlusAnimation(target, {
+                            time: 1000,
+                            num: data.data,
+                            regulator: 32,
+                            start: source
+                        });
+                    }
+                }
+            });
+        },300)
+    }
 
 </script>
 

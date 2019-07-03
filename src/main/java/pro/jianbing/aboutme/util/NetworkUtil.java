@@ -25,9 +25,9 @@ public final class NetworkUtil {
     /**
      * 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址;
      *
-     * @param request
+     * @param request 请求
      * @return
-     * @throws IOException
+     * @throws IOException 输入输出流异常
      */
     public static String getIpAddress(HttpServletRequest request) {
         // 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址
@@ -70,8 +70,8 @@ public final class NetworkUtil {
             }
         } else if (ip.length() > 15) {
             String[] ips = ip.split(",");
-            for (int index = 0; index < ips.length; index++) {
-                String strIp = (String) ips[index];
+            for (String ip1 : ips) {
+                String strIp = ip1;
                 if (!("unknown".equalsIgnoreCase(strIp))) {
                     ip = strIp;
                     break;
@@ -79,7 +79,7 @@ public final class NetworkUtil {
             }
         }
 
-        if ("0:0:0:0:0:0:0:1".equals(ip)) {
+        if ("0:0:0:0:0:0:0:1".equals(ip)||"127.0.0.1".equals(ip)) {
             // 根据网卡取本机配置的IP
             InetAddress inet = null;
             try {
