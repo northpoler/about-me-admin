@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * @author DefaultAccount
+ * @author 李建兵
  */
 @Configuration
 public class LocalDateTimeSerializerConfig {

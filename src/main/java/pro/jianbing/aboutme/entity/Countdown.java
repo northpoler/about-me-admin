@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author DefaultAccount
+ * @author 李建兵
  */
 @Data
 public class Countdown implements Serializable {

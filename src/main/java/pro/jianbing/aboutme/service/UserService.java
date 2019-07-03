@@ -6,7 +6,7 @@ import pro.jianbing.aboutme.entity.User;
 import pro.jianbing.aboutme.repository.UserRepositoty;
 
 /**
- * @author DefaultAccount
+ * @author 李建兵
  */
 @Service
 public class UserService {

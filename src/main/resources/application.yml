@@ -17,7 +17,7 @@ spring:
     database: mysql
 
 server:
-  port: 8088
+  port: 9527
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: pro.jianbing.aboutme.entity

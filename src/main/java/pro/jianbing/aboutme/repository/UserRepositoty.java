@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.User;
 
 import java.time.LocalDateTime;
+/**
+ * @author 李建兵
+ */
 @Repository("userRepository")
 public interface UserRepositoty extends JpaRepository<User,String> {
     /**

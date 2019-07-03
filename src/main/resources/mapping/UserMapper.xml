@@ -32,10 +32,6 @@
         set
           last_ip = #{lastIP},
           last_time = ${lastTime}
-        <!--<if test="lastTime != null">
-            last_time = ${lastTime}
-            /*last_time =  to_date(#{lastTime},'yyyy-MM-dd hh24:mi:ss')*/
-        </if>-->
         where id = #{id}
     </update>
 

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pro.jianbing.aboutme.entity.User;
 import pro.jianbing.aboutme.service.CountdownService;
+import pro.jianbing.aboutme.service.KeywordService;
 import pro.jianbing.aboutme.service.LikeService;
 import pro.jianbing.aboutme.service.UserService;
 import pro.jianbing.aboutme.util.NetworkUtil;
@@ -22,6 +23,8 @@ public class IndexController {
     private final LikeService likeService;
     @Autowired
     UserService userService;
+    @Autowired
+    KeywordService keywordService;
 
     @Autowired
     public IndexController(LikeService likeService, CountdownService countdownService) {
@@ -35,6 +38,10 @@ public class IndexController {
         String addressByIp = NetworkUtil.getAddressByIp(user.getLastIP());
         model.addAttribute("user",user);
         model.addAttribute("address",addressByIp);
+        int sumLikes = likeService.getSumLikes();
+        model.addAttribute("sumLikes",sumLikes);
+        Long sumSearch = keywordService.getSumSearch();
+        model.addAttribute("sumSearch",sumSearch);
         return "index";
     }
 }

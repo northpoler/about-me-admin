@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  *
- * @author DefaultAccount
+ * @author 李建兵
  */
 public class SecurityUser extends User implements UserDetails {
     private static final long serialVersionUID = -1218367693780839610L;

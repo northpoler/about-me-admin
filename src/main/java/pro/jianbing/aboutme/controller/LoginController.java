@@ -18,6 +18,9 @@ import pro.jianbing.aboutme.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author 李建兵
+ */
 @Controller
 public class LoginController {
 

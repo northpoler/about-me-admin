@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pro.jianbing.aboutme.service.LikeService;
 
+/**
+ * @author 李建兵
+ */
 @Controller
 public class SearchController {
 

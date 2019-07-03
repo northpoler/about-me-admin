@@ -3,10 +3,9 @@ package pro.jianbing.aboutme.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
- * @author DefaultAccount
+ * @author 李建兵
  */
 @Data
 public class Picture implements Serializable {

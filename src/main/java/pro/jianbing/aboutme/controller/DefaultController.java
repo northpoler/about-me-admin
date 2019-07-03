@@ -8,7 +8,7 @@ import pro.jianbing.aboutme.service.CountdownService;
 import pro.jianbing.aboutme.service.LikeService;
 
 /**
- * @author DefaultAccount
+ * @author 李建兵
  */
 @Controller
 public class DefaultController {

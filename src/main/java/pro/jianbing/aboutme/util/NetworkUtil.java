@@ -14,13 +14,13 @@ import java.util.Map;
 /**
  * 常用获取客户端信息的工具
  *
- * @author DefaultAccount
+ * @author 李建兵
  */
 public final class NetworkUtil {
     /**
      * Logger for this class
      */
-    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(NetworkUtil.class);
 
     /**
      * 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址;

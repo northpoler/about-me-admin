@@ -11,14 +11,15 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity
-@Table(name="likes")
-public class Like implements Serializable {
-    private static final long serialVersionUID = -6683776601547996277L;
+@Table(name="keyword")
+public class Keyword implements Serializable {
+    private static final long serialVersionUID = -684212631938319120L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    @Column(name = "like_time")
-    private LocalDateTime likeTime;
-    private String person;
+    private String keyword;
+    @Column(name = "search_time")
+    private LocalDateTime searchTime;
     private String ip;
+    private String mark;
 }

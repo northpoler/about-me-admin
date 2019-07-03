@@ -8,6 +8,9 @@ import pro.jianbing.aboutme.service.LikeService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author 李建兵
+ */
 @RestController
 @RequestMapping("/like")
 public class LikeController {
