@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.Like;
 import pro.jianbing.aboutme.entity.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,5 +16,8 @@ import java.time.LocalDateTime;
  */
 @Repository("likeRepository")
 public interface LikeRepositoty extends JpaRepository<Like,String> {
+
+    @Query("select count(like_time) from Like where like_time > current_date")
+    Integer countLikesToday();
 
 }

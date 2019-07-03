@@ -8,6 +8,7 @@ import pro.jianbing.aboutme.repository.LikeRepositoty;
 import pro.jianbing.aboutme.util.NetworkUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -40,5 +41,10 @@ public class LikeService{
         like.setIp(NetworkUtil.getIpAddress(request));
         like.setLikeTime(LocalDateTime.now());
         likeMapper.insertLike(like);
+    }
+
+    public Integer getSumLikesToday(){
+        Integer sumLikesToday = likeRepositoty.countLikesToday();
+        return sumLikesToday;
     }
 }

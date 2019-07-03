@@ -38,4 +38,9 @@ public class KeywordService {
         long count = keywordRepositoty.count();
         return count;
     }
+
+    public Integer getSumSearchToday(){
+        Integer sumSearchToday = keywordRepositoty.countSearchToday();
+        return sumSearchToday;
+    }
 }
