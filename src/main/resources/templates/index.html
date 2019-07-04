@@ -18,9 +18,12 @@
                         <div class="layui-row layui-col-space15">
                             <div class="layui-col-md6">
                                 <div class="layui-card">
-                                    <div class="layui-card-header">总点赞数</div>
+                                    <div class="layui-card-header">
+                                        总点赞数
+                                        <i class="layui-icon layui-icon-praise" style="position: absolute;right: 1em"></i>
+                                    </div>
                                     <div class="layui-card-body">
-                                        <p style="font-size: 4em;margin: 0.5em 0em;text-align: center" id="sumLikes">0</p>
+                                        <p style="font-size: 4em;margin: 0.5em 0em;text-align: center;color: deeppink" id="sumLikes">0</p>
                                         <p>
                                             今日点赞数
                                             <span th:text="${sumLikesToday}" id="sumLikesToday">0</span>
@@ -30,9 +33,12 @@
                             </div>
                             <div class="layui-col-md6">
                                 <div class="layui-card">
-                                    <div class="layui-card-header">总搜索数</div>
+                                    <div class="layui-card-header">
+                                        总搜索数
+                                        <i class="layui-icon layui-icon-search" style="position: absolute;right: 1em"></i>
+                                    </div>
                                     <div class="layui-card-body">
-                                        <p style="font-size: 4em;margin: 0.5em 0px;text-align: center" id="sumSearch">0</p>
+                                        <p style="font-size: 4em;margin: 0.5em 0px;text-align: center;color: deeppink" id="sumSearch">0</p>
                                         <p>
                                             今日搜索数
                                             <span th:text="${sumSearchToday}" id="sumSearchToday">0</span>
@@ -57,36 +63,6 @@
                                    th:href="@{/index}">更改密码</a>
                             </div>
                         </div>
-
-                        <div class="layui-card">
-                            <div class="layui-card-header">产品动态</div>
-                            <div class="layui-card-body">
-                                <div class="layui-carousel layadmin-carousel layadmin-news" data-autoplay="true"
-                                     data-anim="fade" lay-filter="news" lay-anim="fade" lay-indicator="inside"
-                                     lay-arrow="none" style="width: 100%; height: 280px;">
-                                    <div carousel-item="">
-                                        <div class=""><a href="http://fly.layui.com/docs/2/" target="_blank"
-                                                         class="layui-bg-red">layuiAdmin 快速上手文档</a></div>
-                                        <div class=""><a href="http://fly.layui.com/vipclub/list/layuiadmin/"
-                                                         target="_blank" class="layui-bg-green">layuiAdmin 会员讨论专区</a>
-                                        </div>
-                                        <div class="layui-this"><a href="http://www.layui.com/admin/#get"
-                                                                   target="_blank" class="layui-bg-blue">获得 layui
-                                            官方后台模板系统</a></div>
-                                    </div>
-                                    <div class="layui-carousel-ind">
-                                        <ul>
-                                            <li class=""></li>
-                                            <li class=""></li>
-                                            <li class="layui-this"></li>
-                                        </ul>
-                                    </div>
-                                    <button class="layui-icon layui-carousel-arrow" lay-type="sub"></button>
-                                    <button class="layui-icon layui-carousel-arrow" lay-type="add"></button>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="layui-card">
                             <div class="layui-card-header">
                                 作者心语
@@ -219,12 +195,6 @@
             });
         },300)
     }
-
-</script>
-
-</script>
-
-<script>
 
 </script>
 </body>

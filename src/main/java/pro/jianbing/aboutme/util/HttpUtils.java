@@ -23,7 +23,12 @@ import java.util.Map;
  * @version 1.0
  */
 public class HttpUtils {
-    // 发送GET请求
+    /**
+     * 发送GET请求
+     * @param url
+     * @param param
+     * @return
+     */
     public static String doGet(String url, Map<String, String> param) {
 
         // 创建Httpclient对象

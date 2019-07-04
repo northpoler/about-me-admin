@@ -1,10 +1,9 @@
 package pro.jianbing.aboutme.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.jianbing.aboutme.entity.Countdown;
+import pro.jianbing.aboutme.pojo.CountdownDto;
 import pro.jianbing.aboutme.service.CountdownService;
 
 import java.util.HashMap;
@@ -34,5 +33,18 @@ public class CountdownController {
         data.put("data",twoCountdown);
         data.put("count",data.size());
         return data;
+    }
+
+    @PostMapping("update")
+    public Map<String,Object> updateInfo(CountdownDto countdownDto){
+        Integer result = countdownService.saveCountdownInfo(countdownDto);
+        Map<String,Object> data = new HashMap<>(4);
+        if (result>0){
+            data.put("code",0);
+        } else {
+            data.put("code",1);
+        }
+        return data;
+
     }
 }
