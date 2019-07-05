@@ -26,7 +26,7 @@
                                         <p style="font-size: 4em;margin: 0.5em 0em;text-align: center;color: deeppink" id="sumLikes">0</p>
                                         <p>
                                             今日点赞数
-                                            <span th:text="${sumLikesToday}" id="sumLikesToday">0</span>
+                                            <span id="sumLikesToday">0</span>
                                         </p>
                                     </div>
                                 </div>
@@ -41,8 +41,16 @@
                                         <p style="font-size: 4em;margin: 0.5em 0px;text-align: center;color: deeppink" id="sumSearch">0</p>
                                         <p>
                                             今日搜索数
-                                            <span th:text="${sumSearchToday}" id="sumSearchToday">0</span>
+                                            <span id="sumSearchToday">0</span>
                                         </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">数据概览</div>
+                                    <div class="layui-card-body">
+                                        <div id="main" style="width: 100%;height:500px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -65,6 +73,15 @@
                         </div>
                         <div class="layui-card">
                             <div class="layui-card-header">
+                                用户占比
+                                <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+                            </div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <div id="container" style="width: 100%;height:400px;"></div>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
                                 作者心语
                                 <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
                             </div>
@@ -78,24 +95,6 @@
 
                 </div>
             </div>
-            <script>
-                //加载 controller 目录下的对应模块
-                /*
-
-                  小贴士：
-                    这里 console 模块对应 的 console.js 并不会重复加载，
-                    然而该页面的视图则是重新插入到容器，那如何保证能重新来控制视图？有两种方式：
-                      1): 借助 layui.factory 方法获取 console 模块的工厂（回调函数）给 layui.use
-                      2): 直接在 layui.use 方法的回调中书写业务代码，即:
-                          layui.use('console', function(){
-                            //同 console.js 中的 layui.define 回调中的代码
-                          });
-
-                  这里我们采用的是方式1。其它很多视图中采用的其实都是方式2，因为更简单些，也减少了一个请求数。
-
-                */
-                layui.use('console', layui.factory('console'));
-            </script>
         </div>
     </div>
 
@@ -103,6 +102,7 @@
     <div th:include="footer :: copyright"></div>
 </div>
 <script th:src="@{../static/layui/layui.js}"></script>
+<script th:src="@{../static/js/echarts/echarts.min.js}"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
@@ -110,25 +110,265 @@
 
     });
 
-    var sumLikes = [[${sumLikes}]];
-    var sumSearch = [[${sumSearch}]];
-    var sumLikesToday = [[${sumLikesToday}]];
-    var sumSearchToday = [[${sumSearchToday}]];
+    var main = document.getElementById("main");
+    var chart = echarts.init(main);
+    var app = {};
+    chartOption = null;
+    var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
+    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
+    var yMax = 500;
+    var dataShadow = [];
 
+    for (var i = 0; i < data.length; i++) {
+        dataShadow.push(yMax);
+    }
 
-    NumAutoPlusAnimation("sumLikes", {
-        time: 6000,
-        num: sumLikes,
-        regulator: 32,
-        start: 0
+    chartOption = {
+        title: {
+            text: '特性示例：渐变色 阴影 点击缩放',
+            subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+        },
+        xAxis: {
+            data: dataAxis,
+            axisLabel: {
+                inside: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            z: 10
+        },
+        yAxis: {
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        dataZoom: [
+            {
+                type: 'inside'
+            }
+        ],
+        series: [
+            { // For shadow
+                type: 'bar',
+                itemStyle: {
+                    normal: {color: 'rgba(0,0,0,0.05)'}
+                },
+                barGap:'-100%',
+                barCategoryGap:'40%',
+                data: dataShadow,
+                animation: false
+            },
+            {
+                type: 'bar',
+                itemStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: '#83bff6'},
+                                {offset: 0.5, color: '#188df0'},
+                                {offset: 1, color: '#188df0'}
+                            ]
+                        )
+                    },
+                    emphasis: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                {offset: 0, color: '#2378f7'},
+                                {offset: 0.7, color: '#2378f7'},
+                                {offset: 1, color: '#83bff6'}
+                            ]
+                        )
+                    }
+                },
+                data: data
+            }
+        ]
+    };
+
+    // Enable data zoom when user click bar.
+    var zoomSize = 6;
+    chart.on('click', function (params) {
+        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+        chart.dispatchAction({
+            type: 'dataZoom',
+            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+        });
+    });;
+    if (chartOption && typeof chartOption === "object") {
+        chart.setOption(chartOption, true);
+    }
+
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = {
+        backgroundColor: '#fff',
+
+        title: {
+            text: 'Customized Pie',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#000'
+            }
+        },
+
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series : [
+            {
+                name:'访问来源',
+                type:'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:274, name:'联盟广告'},
+                    {value:235, name:'视频广告'},
+                    {value:400, name:'搜索引擎'}
+                ].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(0, 0, 0, 0.6)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(0, 0, 0, 0.6)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 120,
+                        shadowColor: 'rgba(122, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+    var sumLikes = 0;
+    var sumSearch = 0;
+    var sumLikesToday = 0;
+    var sumSearchToday = 0;
+
+    //加载首页数据
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/like/count/all',
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                if (data.code==0){
+                    sumLikes = data.data;
+                    NumAutoPlusAnimation("sumLikes", {
+                        time: 6000,
+                        num: data.data,
+                        regulator: 32,
+                        start: 0
+                    });
+                }
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/keyword/count/all',
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                if (data.code==0){
+                    sumSearch = data.data;
+                    NumAutoPlusAnimation("sumSearch", {
+                        time: 3000,
+                        num: sumSearch,
+                        regulator: 32,
+                        start: 0
+                    });
+                }
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/like/count/today',
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                if (data.code==0){
+                    sumLikesToday = data.data;
+                    $("#sumLikesToday").html(sumLikesToday);
+                }
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/keyword/count/today',
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                if (data.code==0){
+                    sumSearchToday = data.data;
+                    $("#sumSearchToday").html(sumSearchToday);
+                }
+            }
+        });
     });
-    NumAutoPlusAnimation("sumSearch", {
-        time: 3000,
-        num: sumSearch,
-        regulator: 32,
-        start: 0
-    });
-
 
     //数字自增到某一值动画参数（目标元素,自定义配置）
     function NumAutoPlusAnimation(targetEle, options) {
@@ -165,14 +405,16 @@
         }, 30);
     }
 
-    getNewestData("/like/count/all",sumLikes,"sumLikes");
-    getNewestData("/like/count/today",sumLikesToday,"sumLikesToday");
-    getNewestData("/keyword/count/all",sumSearch,"sumSearch");
-    getNewestData("/keyword/count/today",sumSearchToday,"sumSearchToday");
+    $(function () {
+        setTimeout( function(){
+            getNewestData("/like/count/all",sumLikes,"sumLikes");
+            getNewestDataToday("/like/count/today","sumLikesToday");
+            getNewestData("/keyword/count/all",sumSearch,"sumSearch");
+            getNewestDataToday("/keyword/count/today","sumSearchToday");
+        }, 6 * 1000 );
+    });
 
-
-
-    // 定时获取最新的点赞数和搜索数
+    // 定时获取最新的点赞数和搜索数（总数）
     function getNewestData(url,source,target){
         setInterval(function () {
             $.ajax({
@@ -190,6 +432,29 @@
                             regulator: 32,
                             start: source
                         });
+                    }
+                }
+            });
+        },300)
+    }
+
+    // 定时获取最新的点赞数和搜索数(当天)
+    function getNewestDataToday(url,target){
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: url,
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data) {
+                    if (data.code==0){
+                        if (target=='sumLikesToday') {
+                            $("#sumLikesToday").html(data.data);
+                        } else {
+                            $("#sumSearchToday").html(data.data);
+                        }
                     }
                 }
             });
