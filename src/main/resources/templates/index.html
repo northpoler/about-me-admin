@@ -74,25 +74,12 @@
                         <div class="layui-card">
                             <div class="layui-card-header">
                                 用户占比
-                                <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
                             </div>
                             <div class="layui-card-body layui-text layadmin-text">
                                 <div id="container" style="width: 100%;height:400px;"></div>
                             </div>
                         </div>
-                        <div class="layui-card">
-                            <div class="layui-card-header">
-                                作者心语
-                                <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
-                            </div>
-                            <div class="layui-card-body layui-text layadmin-text">
-                                <p>这个后台管理系统是参照了layuiAdmin做的，仅作为个人提升技能使用。</p>
-                                <p>感谢layui！感谢贤心！</p>
-                                <p>—— northpoler</p>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -114,7 +101,7 @@
     var chart = echarts.init(main);
     var app = {};
     chartOption = null;
-    var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
+    var dataAxis = ['点', '击', '柱', '子', '07\n01', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
     var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
     var yMax = 500;
     var dataShadow = [];
@@ -126,7 +113,7 @@
     chartOption = {
         title: {
             text: '特性示例：渐变色 阴影 点击缩放',
-            subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            subtext: ''
         },
         xAxis: {
             data: dataAxis,
@@ -294,6 +281,30 @@
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
+
+    app.currentIndex = -1;
+    setInterval(function () {
+        var dataLen = option.series[0].data.length;
+        // 取消之前高亮的图形
+        myChart.dispatchAction({
+            type: 'downplay',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex
+        });
+        app.currentIndex = (app.currentIndex + 1) % dataLen;
+        // 高亮当前图形
+        myChart.dispatchAction({
+            type: 'highlight',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex
+        });
+        // 显示 tooltip
+        myChart.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,
+            dataIndex: app.currentIndex
+        });
+    }, 1000);
 
     var sumLikes = 0;
     var sumSearch = 0;
