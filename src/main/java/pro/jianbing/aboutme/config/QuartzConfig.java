@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pro.jianbing.aboutme.job.GetDataJob;
 
+import static org.quartz.DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule;
 
 
 /**
@@ -28,8 +29,9 @@ public class QuartzConfig {
      */
     @Bean
     public Trigger myJobTrigger() {
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInSeconds(15).repeatForever();
+        DailyTimeIntervalScheduleBuilder scheduleBuilder = dailyTimeIntervalSchedule()
+                .startingDailyAt(TimeOfDay.hourAndMinuteOfDay(0, 1))
+                .withIntervalInHours(24);
 
         return TriggerBuilder.newTrigger()
                 .forJob(myJobDetail())

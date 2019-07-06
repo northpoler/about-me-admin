@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.Visit;
 import pro.jianbing.aboutme.repository.VisitRepositoty;
 
+import java.util.Map;
+
 /**
  * @author 李建兵
  */
@@ -27,5 +29,10 @@ public class VisitService {
             return 1;
         }
         return 0;
+    }
+
+    public Integer countVisitDaily(){
+        Integer visitDaily = visitRepositoty.countVisitDaily();
+        return visitDaily;
     }
 }

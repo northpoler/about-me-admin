@@ -17,6 +17,6 @@ public class VisitCountDaily implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String day;
-    private Long count;
+    private Integer count;
     private String mark;
 }

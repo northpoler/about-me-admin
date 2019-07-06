@@ -9,3 +9,9 @@
 于是，溯本求源，去看官方的文档，找到了配置文件的问题，改正后，顺利启动。
 启示：网上的帖子很多，针对的问题很可能不是自己真正遇到的，如果难以解决，
 就回归本初，研究官方文档，
+
+
+
+
+分日查询访问量
+select DATE_FORMAT(visit_time,'%Y-%m-%d'),COUNT(*) FROM visit GROUP BY DAY(visit_time); 
