@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://www.jianbing.pro:3306/jianbing?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: username
-    password: username
+    password: ENC(akdyVo0cXjjFekVSZAc5hkqG3NsO0YIm)
 
   thymeleaf:
     mode: HTML
@@ -25,7 +25,7 @@ org:
               URL: jdbc:mysql://www.jianbing.pro:3306/jianbing?useUnicode=true&characterEncoding=utf8
               driver: com.mysql.cj.jdbc.Driver
               username: username
-              password: username
+              password: ENC(akdyVo0cXjjFekVSZAc5hkqG3NsO0YIm)
           scheduler:
             instanceName: clusteredScheduler
             instanceId: AUTO
@@ -55,4 +55,6 @@ mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: pro.jianbing.aboutme.entity
 
-
+jasypt:
+  encryptor:
+    password: jianbing

@@ -15,3 +15,14 @@
 
 分日查询访问量
 select DATE_FORMAT(visit_time,'%Y-%m-%d'),COUNT(*) FROM visit GROUP BY DAY(visit_time); 
+
+
+用到的技术
+
+jpa
+spring security
+spring boot
+maven
+lombok
+httpclient
+quartz
