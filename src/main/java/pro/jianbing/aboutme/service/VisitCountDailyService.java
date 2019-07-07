@@ -8,6 +8,8 @@ import pro.jianbing.aboutme.entity.VisitCountDaily;
 import pro.jianbing.aboutme.repository.VisitCountDailyRepositoty;
 import pro.jianbing.aboutme.repository.VisitRepositoty;
 
+import java.util.List;
+
 /**
  * @author 李建兵
  */
@@ -26,5 +28,13 @@ public class VisitCountDailyService {
     public Integer save(VisitCountDaily visitCountDaily){
         VisitCountDaily countDaily = visitCountDailyRepositoty.save(visitCountDaily);
         return countDaily==null?1:0;
+    }
+
+    public List<VisitCountDaily> findByDay(String yesterday){
+        return visitCountDailyRepositoty.findByDay(yesterday);
+    }
+
+    public List<VisitCountDaily> findAll(){
+        return visitCountDailyRepositoty.findAll();
     }
 }

@@ -1,6 +1,7 @@
 package pro.jianbing.aboutme.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.Countdown;
@@ -9,6 +10,7 @@ import pro.jianbing.aboutme.pojo.CountdownDto;
 import pro.jianbing.aboutme.repository.CountdownRepositoty;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -38,8 +40,9 @@ public class CountdownService {
         if ("title".equals(countdownDto.getField())){
             countdown.setTitle(countdownDto.getValue());
         } else if ("endTime".equals(countdownDto.getField())){
-            /*LocalDateTime dateTime = LocalDateTime.parse(countdownDto.getValue(), "yyyy-MM-dd hh:mi:ss");
-            countdown.setEndTime(dateTime);*/
+            LocalDateTime dateTime = LocalDateTime
+                    .parse(countdownDto.getValue(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            countdown.setEndTime(dateTime);
         } else {
             countdown.setDays(Integer.parseInt(countdownDto.getValue()));
         }

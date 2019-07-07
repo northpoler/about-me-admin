@@ -31,7 +31,7 @@ public class QuartzConfig {
     public Trigger myJobTrigger() {
         DailyTimeIntervalScheduleBuilder scheduleBuilder = dailyTimeIntervalSchedule()
                 .startingDailyAt(TimeOfDay.hourAndMinuteOfDay(0, 1))
-                .withIntervalInHours(24);
+                .withIntervalInHours(8);
 
         return TriggerBuilder.newTrigger()
                 .forJob(myJobDetail())

@@ -89,7 +89,7 @@
     <div th:include="footer :: copyright"></div>
 </div>
 <script th:src="@{../static/layui/layui.js}"></script>
-<script th:src="@{../static/js/echarts/echarts.min.js}"></script>
+<script th:src="@{../static/js/echarts/echarts.min.js}" charset="UTF-8"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
@@ -101,102 +101,89 @@
     var chart = echarts.init(main);
     var app = {};
     chartOption = null;
-    var dataAxis = ['点', '击', '柱', '子', '07\n01', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-    var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-    var yMax = 500;
-    var dataShadow = [];
-
-    for (var i = 0; i < data.length; i++) {
-        dataShadow.push(yMax);
-    }
-
-    chartOption = {
-        title: {
-            text: '特性示例：渐变色 阴影 点击缩放',
-            subtext: ''
-        },
-        xAxis: {
-            data: dataAxis,
-            axisLabel: {
-                inside: true,
-                textStyle: {
-                    color: '#fff'
+    chart.showLoading();
+    $.get('/visit/count/daily', function (data) {
+        chart.hideLoading();
+        chart.setOption(chartOption = {
+            title: {
+                text: '每日访问量'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: data.date
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
                 }
             },
-            axisTick: {
-                show: false
+            toolbox: {
+                left: 'center',
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
             },
-            axisLine: {
-                show: false
-            },
-            z: 10
-        },
-        yAxis: {
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                textStyle: {
+            dataZoom: [{
+                startValue: '2014-06-01'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                top: 10,
+                right: 10,
+                pieces: [{
+                    gt: 0,
+                    lte: 10,
+                    color: '#096'
+                }, {
+                    gt: 10,
+                    lte: 20,
+                    color: '#ffde33'
+                }, {
+                    gt: 20,
+                    lte: 40,
+                    color: '#ff9933'
+                }, {
+                    gt: 40,
+                    lte: 80,
+                    color: '#cc0033'
+                }, {
+                    gt: 80,
+                    lte: 160,
+                    color: '#660099'
+                }, {
+                    gt: 160,
+                    color: '#7e0023'
+                }],
+                outOfRange: {
                     color: '#999'
                 }
-            }
-        },
-        dataZoom: [
-            {
-                type: 'inside'
-            }
-        ],
-        series: [
-            { // For shadow
-                type: 'bar',
-                itemStyle: {
-                    normal: {color: 'rgba(0,0,0,0.05)'}
-                },
-                barGap:'-100%',
-                barCategoryGap:'40%',
-                data: dataShadow,
-                animation: false
             },
-            {
-                type: 'bar',
-                itemStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#83bff6'},
-                                {offset: 0.5, color: '#188df0'},
-                                {offset: 1, color: '#188df0'}
-                            ]
-                        )
-                    },
-                    emphasis: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                {offset: 0, color: '#2378f7'},
-                                {offset: 0.7, color: '#2378f7'},
-                                {offset: 1, color: '#83bff6'}
-                            ]
-                        )
-                    }
-                },
-                data: data
+            series: {
+                name: '每日访问量',
+                type: 'line',
+                data: data.count,
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 10
+                    }, {
+                        yAxis: 20
+                    }, {
+                        yAxis: 40
+                    }, {
+                        yAxis: 80
+                    }, {
+                        yAxis: 160
+                    }]
+                }
             }
-        ]
-    };
-
-    // Enable data zoom when user click bar.
-    var zoomSize = 6;
-    chart.on('click', function (params) {
-        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-        chart.dispatchAction({
-            type: 'dataZoom',
-            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
         });
     });;
     if (chartOption && typeof chartOption === "object") {
@@ -210,7 +197,7 @@
         backgroundColor: '#fff',
 
         title: {
-            text: 'Customized Pie',
+            text: '来访用户主要来源地',
             left: 'center',
             top: 20,
             textStyle: {
@@ -238,11 +225,13 @@
                 radius : '55%',
                 center: ['50%', '50%'],
                 data:[
-                    {value:335, name:'直接访问'},
-                    {value:310, name:'邮件营销'},
-                    {value:274, name:'联盟广告'},
-                    {value:235, name:'视频广告'},
-                    {value:400, name:'搜索引擎'}
+                    {value:335, name:'浙江杭州'},
+                    {value:310, name:'安徽合肥'},
+                    {value:274, name:'江苏南京'},
+                    {value:235, name:'上海'},
+                    {value:344, name:'北京'},
+                    {value:389, name:'其他'},
+                    {value:400, name:'安徽阜阳'}
                 ].sort(function (a, b) { return a.value - b.value; }),
                 roseType: 'radius',
                 label: {
