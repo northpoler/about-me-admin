@@ -15,6 +15,7 @@ spring:
     hibernate:
       ddl-auto: update
     database: mysql
+    open-in-view: false
 org:
   quartz:
     properties:

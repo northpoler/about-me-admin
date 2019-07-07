@@ -92,11 +92,12 @@
             <version>${jmh.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <version>5.5.0</version>
+            <scope>test</scope>
         </dependency>
         <!--jmh结束-->
 	
