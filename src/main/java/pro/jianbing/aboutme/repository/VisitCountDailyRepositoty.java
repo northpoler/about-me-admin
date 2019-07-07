@@ -13,5 +13,10 @@ import java.util.List;
  */
 @Repository("visitCountDailyRepository")
 public interface VisitCountDailyRepositoty extends JpaRepository<VisitCountDaily,Long> {
+    /**
+     * 获取前一天的访客量
+     * @param yesterday
+     * @return
+     */
     List<VisitCountDaily> findByDay(String yesterday);
 }

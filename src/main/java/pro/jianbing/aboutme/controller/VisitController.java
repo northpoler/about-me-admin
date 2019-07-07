@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.jianbing.aboutme.entity.VisitCountDaily;
 import pro.jianbing.aboutme.service.KeywordService;
 import pro.jianbing.aboutme.service.VisitCountDailyService;
+import pro.jianbing.aboutme.service.VisitService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,10 +24,12 @@ public class VisitController {
 
     private final
     VisitCountDailyService visitCountDailyService;
+    private final VisitService visitService;
 
     @Autowired
-    public VisitController(VisitCountDailyService visitCountDailyService) {
+    public VisitController(VisitCountDailyService visitCountDailyService,VisitService visitService) {
         this.visitCountDailyService = visitCountDailyService;
+        this.visitService = visitService;
     }
 
     @GetMapping("count/daily")
@@ -39,6 +43,9 @@ public class VisitController {
             date.add(visitCountDaily.getDay());
             count.add(visitCountDaily.getCount());
         }
+        Integer visitorsToday = visitService.countVisitorsToday();
+        date.add(LocalDate.now().toString());
+        count.add(visitorsToday);
         Map<String, Object> result = new HashMap<>(4);
         result.put("code",0);
         result.put("date",date);

@@ -3,7 +3,6 @@
 <head>
     <title>建兵本纪 | 后台主页</title>
     <div th:include="top :: top"></div>
-
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -59,16 +58,38 @@
 
                     <div class="layui-col-md4">
                         <div class="layui-card">
-                            <div class="layui-card-header">
-                        <span th:inline="text"
-                              style="font-size: larger">欢迎你 [[${#httpServletRequest.remoteUser}]]!</span>
+                            <div class="layui-card-header">登录信息</span>
                             </div>
-                            <div class="layui-card-body">
-                                <p>你上次登陆时间: <span th:text="${user.lastTime}">Sebastian</span></p>
-                                <p>你上次登陆地址: <span th:text="${address}">Sebastian</span></p>
-                                <span>如果不是你本人的操作，请尽快</span>
-                                <a class="layui-table-link" style="color: limegreen;text-decoration: underline"
-                                   th:href="@{/index}">更改密码</a>
+                            <div class="layui-card-body layui-text">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="40">
+                                        <col width="60">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <td>上次登陆时间</td>
+                                        <td>
+                                            <span th:text="${user.lastTime}">时间</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>上次登陆地址</td>
+                                        <td>
+                                            <span th:text="${address}">地点</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>操作</td>
+                                        <td style="padding-bottom: 0;">
+                                            <div class="layui-btn-container">
+                                                <a href="/" target="_blank" class="layui-btn layui-btn-danger">举报此IP</a>
+                                                <a href="/" target="_blank" class="layui-btn">更改密码</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="layui-card">
@@ -89,7 +110,7 @@
     <div th:include="footer :: copyright"></div>
 </div>
 <script th:src="@{../static/layui/layui.js}"></script>
-<script th:src="@{../static/js/echarts/echarts.min.js}" charset="UTF-8"></script>
+<script th:src="@{../static/js/echarts/echarts.js}"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
@@ -166,7 +187,7 @@
                 }
             },
             series: {
-                name: '每日访问量',
+                name: '访问人次',
                 type: 'line',
                 data: data.count,
                 markLine: {
@@ -212,7 +233,7 @@
 
         visualMap: {
             show: false,
-            min: 80,
+            min: 100,
             max: 600,
             inRange: {
                 colorLightness: [0, 1]
@@ -230,7 +251,6 @@
                     {value:274, name:'江苏南京'},
                     {value:235, name:'上海'},
                     {value:344, name:'北京'},
-                    {value:389, name:'其他'},
                     {value:400, name:'安徽阜阳'}
                 ].sort(function (a, b) { return a.value - b.value; }),
                 roseType: 'radius',
@@ -253,7 +273,7 @@
                 },
                 itemStyle: {
                     normal: {
-                        color: '#c23531',
+                        color: '#ff1231',
                         shadowBlur: 120,
                         shadowColor: 'rgba(122, 0, 0, 0.5)'
                     }

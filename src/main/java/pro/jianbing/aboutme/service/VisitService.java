@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.Visit;
 import pro.jianbing.aboutme.repository.VisitRepositoty;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -34,5 +35,10 @@ public class VisitService {
     public Integer countVisitDaily(){
         Integer visitDaily = visitRepositoty.countVisitDaily();
         return visitDaily;
+    }
+
+    public Integer countVisitorsToday(){
+        Integer visitorsToday = visitRepositoty.countVisitByVisitTimeAfter(LocalDate.now().atTime(0,0,0));
+        return visitorsToday;
     }
 }
