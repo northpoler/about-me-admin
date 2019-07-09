@@ -29,7 +29,7 @@ public class GetDataJob extends QuartzJobBean {
         log.info("开始执行任务：读取并写入每日访问量");
         String yestoday = LocalDate.now().minusDays(1L).toString();
         List<VisitCountDaily> byDay = visitCountDailyService.findByDay(yestoday);
-        if (null==byDay){
+        if (null==byDay||byDay.size()<1){
             Integer visitDaily = visitService.countVisitDaily();
             log.info("昨天的访问量："+visitDaily);
             log.info("开始插入昨日访问量.........");
@@ -38,8 +38,8 @@ public class GetDataJob extends QuartzJobBean {
             visitCountDaily.setDay(LocalDate.now().minusDays(1L).toString());
             visitCountDailyService.save(visitCountDaily);
             log.info("任务完成：读取并写入每日访问量");
+        } else {
+            log.info("数据已经存在，跳过任务");
         }
-        log.info("数据已经存在，跳过任务");
-
     }
 }
