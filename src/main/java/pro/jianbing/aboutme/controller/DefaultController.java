@@ -17,9 +17,4 @@ public class DefaultController {
     public String countdown(){
         return "countdown";
     }
-
-    @GetMapping("/info")
-    public String info(){
-        return "info";
-    }
 }

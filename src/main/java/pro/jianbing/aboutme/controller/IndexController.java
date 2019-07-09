@@ -38,14 +38,6 @@ public class IndexController {
         String addressByIp = NetworkUtil.getAddressByIp(user.getLastIP());
         model.addAttribute("user",user);
         model.addAttribute("address",addressByIp);
-        int sumLikes = likeService.getSumLikes();
-        /*model.addAttribute("sumLikes",sumLikes);
-        Integer sumLikesToday = likeService.getSumLikesToday();
-        model.addAttribute("sumLikesToday",sumLikesToday);
-        Integer sumSearchToday = keywordService.getSumSearchToday();
-        model.addAttribute("sumSearchToday",sumSearchToday);
-        Long sumSearch = keywordService.getSumSearch();
-        model.addAttribute("sumSearch",sumSearch);*/
         return "index";
     }
 }
