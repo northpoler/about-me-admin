@@ -110,7 +110,7 @@
     <div th:include="footer :: copyright"></div>
 </div>
 <script th:src="@{../static/layui/layui.js}"></script>
-<script th:src="@{../static/js/echarts/echarts.js}"></script>
+<!--<script th:src="@{../static/js/echarts/echarts.js}"></script>-->
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
@@ -118,196 +118,199 @@
 
     });
 
-    var main = document.getElementById("main");
-    var chart = echarts.init(main);
-    var app = {};
-    chartOption = null;
-    chart.showLoading();
-    $.get('/visit/count/daily', function (data) {
-        chart.hideLoading();
-        chart.setOption(chartOption = {
-            title: {
-                text: '每日访问量'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            xAxis: {
-                data: data.date
-            },
-            yAxis: {
-                splitLine: {
-                    show: false
-                }
-            },
-            toolbox: {
-                left: 'center',
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            dataZoom: [{
-                startValue: '2014-06-01'
-            }, {
-                type: 'inside'
-            }],
-            visualMap: {
-                top: 10,
-                right: 10,
-                pieces: [{
-                    gt: 0,
-                    lte: 10,
-                    color: '#096'
-                }, {
-                    gt: 10,
-                    lte: 20,
-                    color: '#ffde33'
-                }, {
-                    gt: 20,
-                    lte: 50,
-                    color: '#ff9933'
-                }, {
-                    gt: 50,
-                    lte: 100,
-                    color: '#cc0033'
-                }, {
-                    gt: 100,
-                    color: '#7e0023'
-                }],
-                outOfRange: {
-                    color: '#999'
-                }
-            },
-            series: {
-                name: '访问人次',
-                type: 'line',
-                data: data.count,
-                markLine: {
-                    silent: true,
-                    data: [{
-                        yAxis: 10
-                    }, {
-                        yAxis: 20
-                    }, {
-                        yAxis: 50
-                    }, {
-                        yAxis: 100
-                    }]
-                }
-            }
-        });
-    });;
-    if (chartOption && typeof chartOption === "object") {
-        chart.setOption(chartOption, true);
-    }
 
-    var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = {
-        backgroundColor: '#fff',
-
-        title: {
-            text: '来访用户主要来源地',
-            left: 'center',
-            top: 20,
-            textStyle: {
-                color: '#000'
-            }
-        },
-
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-
-        visualMap: {
-            show: false,
-            min: 100,
-            max: 600,
-            inRange: {
-                colorLightness: [0, 1]
-            }
-        },
-        series : [
-            {
-                name:'访问来源',
-                type:'pie',
-                radius : '55%',
-                center: ['50%', '50%'],
-                data:[
-                    {value:335, name:'浙江杭州'},
-                    {value:310, name:'安徽合肥'},
-                    {value:274, name:'江苏南京'},
-                    {value:235, name:'上海'},
-                    {value:344, name:'北京'},
-                    {value:400, name:'安徽阜阳'}
-                ].sort(function (a, b) { return a.value - b.value; }),
-                roseType: 'radius',
-                label: {
-                    normal: {
-                        textStyle: {
-                            color: 'rgba(0, 0, 0, 0.6)'
-                        }
+    function paintChart() {
+        var main = document.getElementById("main");
+        var chart = echarts.init(main);
+        var app = {};
+        chartOption = null;
+        chart.showLoading();
+        $.get('/visit/count/daily', function (data) {
+            chart.hideLoading();
+            chart.setOption(chartOption = {
+                title: {
+                    text: '每日访问量'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data: data.date
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
                     }
                 },
-                labelLine: {
-                    normal: {
-                        lineStyle: {
-                            color: 'rgba(0, 0, 0, 0.6)'
+                toolbox: {
+                    left: 'center',
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
                         },
-                        smooth: 0.2,
-                        length: 10,
-                        length2: 20
+                        restore: {},
+                        saveAsImage: {}
                     }
                 },
-                itemStyle: {
-                    normal: {
-                        color: '#ff1231',
-                        shadowBlur: 120,
-                        shadowColor: 'rgba(122, 0, 0, 0.5)'
+                dataZoom: [{
+                    startValue: '2014-06-01'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 10,
+                        color: '#096'
+                    }, {
+                        gt: 10,
+                        lte: 20,
+                        color: '#ffde33'
+                    }, {
+                        gt: 20,
+                        lte: 50,
+                        color: '#ff9933'
+                    }, {
+                        gt: 50,
+                        lte: 100,
+                        color: '#cc0033'
+                    }, {
+                        gt: 100,
+                        color: '#7e0023'
+                    }],
+                    outOfRange: {
+                        color: '#999'
                     }
                 },
-
-                animationType: 'scale',
-                animationEasing: 'elasticOut',
-                animationDelay: function (idx) {
-                    return Math.random() * 200;
+                series: {
+                    name: '访问人次',
+                    type: 'line',
+                    data: data.count,
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 10
+                        }, {
+                            yAxis: 20
+                        }, {
+                            yAxis: 50
+                        }, {
+                            yAxis: 100
+                        }]
+                    }
                 }
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
+            });
+        });;
+        if (chartOption && typeof chartOption === "object") {
+            chart.setOption(chartOption, true);
+        }
 
-    app.currentIndex = -1;
-    setInterval(function () {
-        var dataLen = option.series[0].data.length;
-        // 取消之前高亮的图形
-        myChart.dispatchAction({
-            type: 'downplay',
-            seriesIndex: 0,
-            dataIndex: app.currentIndex
-        });
-        app.currentIndex = (app.currentIndex + 1) % dataLen;
-        // 高亮当前图形
-        myChart.dispatchAction({
-            type: 'highlight',
-            seriesIndex: 0,
-            dataIndex: app.currentIndex
-        });
-        // 显示 tooltip
-        myChart.dispatchAction({
-            type: 'showTip',
-            seriesIndex: 0,
-            dataIndex: app.currentIndex
-        });
-    }, 1000);
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = {
+            backgroundColor: '#fff',
+
+            title: {
+                text: '来访用户主要来源地',
+                left: 'center',
+                top: 20,
+                textStyle: {
+                    color: '#000'
+                }
+            },
+
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+
+            visualMap: {
+                show: false,
+                min: 100,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+            series : [
+                {
+                    name:'访问来源',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:[
+                        {value:335, name:'浙江杭州'},
+                        {value:310, name:'安徽合肥'},
+                        {value:274, name:'江苏南京'},
+                        {value:235, name:'上海'},
+                        {value:344, name:'北京'},
+                        {value:400, name:'安徽阜阳'}
+                    ].sort(function (a, b) { return a.value - b.value; }),
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: 'rgba(0, 0, 0, 0.6)'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(0, 0, 0, 0.6)'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#ff1231',
+                            shadowBlur: 120,
+                            shadowColor: 'rgba(122, 0, 0, 0.5)'
+                        }
+                    },
+
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
+                    }
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+        app.currentIndex = -1;
+        setInterval(function () {
+            var dataLen = option.series[0].data.length;
+            // 取消之前高亮的图形
+            myChart.dispatchAction({
+                type: 'downplay',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+            app.currentIndex = (app.currentIndex + 1) % dataLen;
+            // 高亮当前图形
+            myChart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+            // 显示 tooltip
+            myChart.dispatchAction({
+                type: 'showTip',
+                seriesIndex: 0,
+                dataIndex: app.currentIndex
+            });
+        }, 1000);
+    }
 
     var sumLikes = 0;
     var sumSearch = 0;
@@ -474,6 +477,52 @@
             });
         },300)
     }
+
+    /*function loadJS(src, callback){
+        var script = document.createElement('script');
+        var head = document.getElementsByTagName('body')[0];
+        var loaded;
+        script.src = src;
+        if(typeof callback === 'function'){
+            script.onload = script.onreadystatechange = function(){
+                if(!loaded && (!script.readyState || /loaded|complete/.test(script.readyState))){
+                    script.onload = script.onreadystatechange = null;
+                    loaded = true;
+                    callback();
+                }
+            }
+        }
+        head.appendChild(script);
+    }
+    loadJS('../static/js/echarts/echarts.js', function(){
+        paintChart();
+    });*/
+
+    var script=document.createElement("script");
+    script.type="text/javascript";
+    script.src="../static/js/echarts/echarts.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+    $("#main").html("文件加载中......");
+    script.onload=function(){
+        paintChart();
+    };
+
+    /*$(function(){
+        if(window.attachEvent){
+            window.attachEvent("load", asyncLoad);
+        }else{
+            window.addEventListener("load", asyncLoad);
+        }
+        var asyncLoad = function(){
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = '../static/js/echarts/echarts.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        }
+        paintChart();
+    });*/
 
 </script>
 </body>
