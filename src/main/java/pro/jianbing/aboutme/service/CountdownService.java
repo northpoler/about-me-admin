@@ -53,6 +53,17 @@ public class CountdownService {
     }
 
     @Transactional
+    public Integer deleteCountdownInfo(CountdownDto countdownDto){
+        Countdown countdown = countdownRepositoty.getOne(Long.parseLong(countdownDto.getId()));
+        countdown.setMark("1");
+        Countdown save = countdownRepositoty.save(countdown);
+        if (save!=null){
+            return 1;
+        }
+        return 0;
+    }
+
+    @Transactional
     public Integer addCountdownInfo(CountdownDto countdownDto){
         Countdown countdown = new Countdown();
         countdown.setTitle(countdownDto.getTitle());

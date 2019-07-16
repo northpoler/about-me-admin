@@ -16,6 +16,7 @@
           end_time endTime,
           days
         from countdown
+        where mark = '0' or mark = '2'
         order by end_time
     </select>
 

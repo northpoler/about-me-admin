@@ -72,4 +72,17 @@ public class CountdownController {
         }
         return data;
     }
+
+    @PostMapping("delete")
+    @ResponseBody
+    public Map<String,Object> deleteInfo(CountdownDto countdownDto){
+        Integer result = countdownService.deleteCountdownInfo(countdownDto);
+        Map<String,Object> data = new HashMap<>(4);
+        if (result>0){
+            data.put("code",0);
+        } else {
+            data.put("code",1);
+        }
+        return data;
+    }
 }

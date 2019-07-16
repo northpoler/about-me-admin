@@ -21,4 +21,5 @@ public class Countdown implements Serializable {
     @Column(name = "end_time")
     private LocalDateTime endTime;
     private Integer days;
+    private String mark;
 }

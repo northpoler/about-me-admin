@@ -20,7 +20,7 @@
             </div>
         </script>
         <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">启/停用</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         </script>
     </div>
@@ -111,6 +111,46 @@
                     }
                 }
             });
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/countdown/delete',
+                        data: {
+                            "id":data.id
+                        },
+                        cache: false,
+                        async: true,
+                        success: function (data) {
+                            if (data.code==0){
+                                layer.msg("删除成功！");
+                            } else {
+                                layer.msg("删除失败！");
+                            }
+                            obj.del();
+                            layer.close(index);
+                        }
+                    });
+
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
         });
 
         //工具栏事件
