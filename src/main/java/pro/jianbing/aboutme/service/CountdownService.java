@@ -1,7 +1,6 @@
 package pro.jianbing.aboutme.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.jianbing.aboutme.entity.Countdown;
@@ -36,7 +35,7 @@ public class CountdownService {
 
     @Transactional
     public Integer saveCountdownInfo(CountdownDto countdownDto){
-        Countdown countdown = countdownRepositoty.getOne(countdownDto.getId());
+        Countdown countdown = countdownRepositoty.getOne(Long.parseLong(countdownDto.getId()));
         if ("title".equals(countdownDto.getField())){
             countdown.setTitle(countdownDto.getValue());
         } else if ("endTime".equals(countdownDto.getField())){
@@ -46,6 +45,21 @@ public class CountdownService {
         } else {
             countdown.setDays(Integer.parseInt(countdownDto.getValue()));
         }
+        Countdown save = countdownRepositoty.save(countdown);
+        if (save!=null){
+            return 1;
+        }
+        return 0;
+    }
+
+    @Transactional
+    public Integer addCountdownInfo(CountdownDto countdownDto){
+        Countdown countdown = new Countdown();
+        countdown.setTitle(countdownDto.getTitle());
+        countdown.setDays(Integer.parseInt(countdownDto.getDays()));
+        LocalDateTime dateTime = LocalDateTime
+                .parse(countdownDto.getDate()+" "+countdownDto.getTime(),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        countdown.setEndTime(dateTime);
         Countdown save = countdownRepositoty.save(countdown);
         if (save!=null){
             return 1;

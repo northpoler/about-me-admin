@@ -13,8 +13,5 @@ import pro.jianbing.aboutme.service.LikeService;
 @Controller
 public class DefaultController {
 
-    @GetMapping("/countdown")
-    public String countdown(){
-        return "countdown";
-    }
+
 }

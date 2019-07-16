@@ -1,6 +1,7 @@
 package pro.jianbing.aboutme.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pro.jianbing.aboutme.entity.Countdown;
 import pro.jianbing.aboutme.pojo.CountdownDto;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @author 李建兵
  */
 @RequestMapping("countdown")
-@RestController
+@Controller
 public class CountdownController {
 
     private final CountdownService countdownService;
@@ -24,7 +25,31 @@ public class CountdownController {
         this.countdownService = countdownService;
     }
 
+    @GetMapping("")
+    public String countdown(){
+        return "countdown";
+    }
+
+    @GetMapping("add")
+    public String addCountdownPage(){
+        return "add_countdown";
+    }
+
+    @PostMapping("add")
+    @ResponseBody
+    public Map<String,Object> addCountdown(CountdownDto countdownDto){
+        Integer result = countdownService.addCountdownInfo(countdownDto);
+        Map<String,Object> data = new HashMap<>(4);
+        if (result>0){
+            data.put("code",0);
+        } else {
+            data.put("code",1);
+        }
+        return data;
+    }
+
     @GetMapping("table")
+    @ResponseBody
     public Map<String,Object> getTwoCountdown(){
         List<Countdown> twoCountdown = countdownService.getTwoCountdown();
         Map<String,Object> data = new HashMap<>(4);
@@ -36,6 +61,7 @@ public class CountdownController {
     }
 
     @PostMapping("update")
+    @ResponseBody
     public Map<String,Object> updateInfo(CountdownDto countdownDto){
         Integer result = countdownService.saveCountdownInfo(countdownDto);
         Map<String,Object> data = new HashMap<>(4);
@@ -45,6 +71,5 @@ public class CountdownController {
             data.put("code",1);
         }
         return data;
-
     }
 }

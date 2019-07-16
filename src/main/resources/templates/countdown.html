@@ -16,6 +16,7 @@
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
                 <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                <button class="layui-btn layui-btn-sm" onclick="add()">新增</button>
             </div>
         </script>
         <script type="text/html" id="barDemo">
@@ -44,6 +45,20 @@
         s.parentNode.insertBefore(hm, s);
     })();
 
+    function add() {
+        layer.open({
+            type: 2,
+            title: '添加倒计时任务',
+            shade: false,
+            area: ['450px', '450px'],
+            maxmin: true,
+            content: '/countdown/add',
+            zIndex: layer.zIndex, //重点1
+            success: function(layero){
+                layer.setTop(layero); //重点2
+            }
+        });
+    }
     layui.use('table', function () {
         var table = layui.table;
 

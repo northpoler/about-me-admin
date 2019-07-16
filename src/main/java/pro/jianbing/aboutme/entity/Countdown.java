@@ -16,7 +16,7 @@ public class Countdown implements Serializable {
     private static final long serialVersionUID = -1811772377015660792L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     private String title;
     @Column(name = "end_time")
     private LocalDateTime endTime;

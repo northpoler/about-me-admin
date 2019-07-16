@@ -11,5 +11,5 @@ import pro.jianbing.aboutme.entity.Keyword;
  * @author 李建兵
  */
 @Repository("countdownRepository")
-public interface CountdownRepositoty extends JpaRepository<Countdown,String> {
+public interface CountdownRepositoty extends JpaRepository<Countdown,Long> {
 }
